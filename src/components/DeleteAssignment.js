@@ -81,8 +81,8 @@ function DeleteAssignment(props) {
                     </tr>
                 </tbody>
             </table>
-            {!force && <button id="sgrade" type="button" margin="auto" onClick={deleteAssignment} >Delete Assignment</button>}
-            {force && <button id="sgrade" type="button" margin="auto" onClick={forceDelete} >  Force Delete</button>}
+            {!force && <button id="nDelete" type="button" margin="auto" onClick={deleteAssignment} >Delete Assignment</button>}
+            {force && <button id="fDelete" type="button" margin="auto" onClick={forceDelete} >  Force Delete</button>}
             <button> <Link to={`/`}>Back</Link></button>
             </div>
         </div>

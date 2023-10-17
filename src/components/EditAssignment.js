@@ -85,13 +85,13 @@ function EditAssignment(props) {
                   <input type="text" name="name" value={currentAssignment.assignmentName} onChange={onChangeInput} />
                 </td>
                 <td>
-                  <input type="text" name="Date" value={currentAssignment.dueDate} onChange={onChangeDate} />
+                  <input type="text" name="date" value={currentAssignment.dueDate} onChange={onChangeDate} />
                 </td>
                 <td>{currentAssignment.courseTitle}</td>  
               </tr>
           </tbody>
         </table>
-        <button id="sgrade" type="button" margin="auto" onClick={saveAssignment}>Save Assignment</button>
+        <button id="submit" type="button" margin="auto" onClick={saveAssignment}>Save Assignment</button>
         <button> <Link to={`/`}>Back</Link></button>
       </div>
     </div>
