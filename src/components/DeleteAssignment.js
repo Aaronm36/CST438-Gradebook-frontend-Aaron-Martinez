@@ -8,6 +8,7 @@ function DeleteAssignment(props) {
     let assignmentId=0;
     const [force, setForce] = useState(false);
     const [message, setMessage] = useState('');
+    const token = sessionStorage.getItem("jwt");
   
     const path = window.location.pathname;
     const s = /\d+$/.exec(path)[0];
@@ -21,7 +22,9 @@ function DeleteAssignment(props) {
     const fetchAssignments = ( ) => {
         setMessage('');
         console.log("fetchAssignment "+assignmentId);
-        fetch(`${SERVER_URL}/assignment/${assignmentId}`)
+        fetch(`${SERVER_URL}/assignment/${assignmentId}` , {
+            headers: {'Authorization' : token}
+          })
         .then((response) => response.json()) 
         .then((data) => { setName(data) })       
         .catch(err => { 
@@ -35,13 +38,14 @@ function DeleteAssignment(props) {
         setMessage(''); 
         console.log("Assignment.save ");     
         fetch(`${SERVER_URL}/assignment/${assignmentId}` , 
-            {  method: 'Delete'} )
+            {  method: 'Delete',
+            headers: {'Authorization' : token} })
         .then(res => {
           fetchAssignments(assignmentId);
           setMessage("Assignment Deleted.");
           setForce(false);
             
-          if(res.status == 400){
+          if(res.status === 400){
               setMessage("The assignment you want to delete has grades. \n If you would like to continue deleting press the force delete button at the bottom or press back");
               setForce(true);
       }})
@@ -54,7 +58,8 @@ function DeleteAssignment(props) {
      
      const forceDelete = () => {
         fetch(`${SERVER_URL}/assignment/${assignmentId}?force=yes`, 
-            {  method: 'Delete'} )
+            {  method: 'Delete',
+            headers: {'Authorization' : token}} )
             setMessage("Assignment Deleted");
      }
 

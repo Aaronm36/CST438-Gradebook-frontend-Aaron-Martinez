@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {SERVER_URL} from '../constants';
 import {Link} from 'react-router-dom';
 
-
 function ListAssignment(props) {
 
   const [assignments, setAssignments] = useState([]);
   const [message, setMessage] = useState('');
+
+  const token = sessionStorage.getItem("jwt");
 
   useEffect(() => {
    // called once after intial render
@@ -14,14 +15,16 @@ function ListAssignment(props) {
   }, [] )
  
   const fetchAssignments = () => {
-    console.log("fetchAssignments");
-    fetch(`${SERVER_URL}/assignment`)
-    .then((response) => response.json() ) 
-    .then((data) => { 
-      console.log("assignment length "+data.length);
-      setAssignments(data);
-     }) 
-    .catch(err => console.error(err)); 
+      console.log("fetchAssignments");
+      fetch(`${SERVER_URL}/assignment`, {
+        headers: {'Authorization' : token}
+      })
+      .then(response => response.json()) 
+      .then(data => { 
+        console.log("assignment length "+data.length);
+        setAssignments(data);
+      })
+      .catch(err => console.error(err)); 
   }
   
   
