@@ -10,6 +10,7 @@ function EditAssignment(props) {
   const [currentAssignment, setName] = useState([]);
   let assignmentId=0;
   const [message, setMessage] = useState('');
+  const token = sessionStorage.getItem("jwt");
 
   const path = window.location.pathname;
   const s = /\d+$/.exec(path)[0];
@@ -23,7 +24,9 @@ function EditAssignment(props) {
   const fetchAssignments = ( ) => {
       setMessage('');
       console.log("fetchAssignment "+assignmentId);
-      fetch(`${SERVER_URL}/assignment/${assignmentId}`)
+      fetch(`${SERVER_URL}/assignment/${assignmentId}`, {
+        headers: {'Authorization' : token}
+      })
       .then((response) => response.json()) 
       .then((data) => { setName(data) })       
       .catch(err => { 
@@ -38,7 +41,7 @@ function EditAssignment(props) {
       fetch(`${SERVER_URL}/assignment/${assignmentId}` , 
           {  
             method: 'PUT', 
-            headers: { 'Content-Type': 'application/json', }, 
+            headers: {'Authorization' : token, 'Content-Type': 'application/json' }, 
             body: JSON.stringify( currentAssignment )
           } )
       .then(res => {

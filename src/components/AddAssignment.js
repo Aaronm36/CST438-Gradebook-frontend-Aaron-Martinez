@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import {SERVER_URL} from '../constants';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import {Link} from 'react-router-dom';
 
 function AddAssignment(props) { 
 
-  const [open, setOpen] = useState(false)
   const [message, setMessage] = useState('');
   const [assignment, setAssignment] = useState({courseId: 0, dueDate: "", assignmentName: ""});
+  const token = sessionStorage.getItem("jwt");
 
   const handleChange = (event) => {
     setAssignment({...assignment, [event.target.name]:event.target.value});
@@ -24,7 +18,8 @@ function AddAssignment(props) {
     fetch(`${SERVER_URL}/assignment`, 
           {  
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Authorization' : token,
+            'Content-Type': 'application/json'},
             body: JSON.stringify(assignment)})
     .then((response) => {
       if(response.ok){
